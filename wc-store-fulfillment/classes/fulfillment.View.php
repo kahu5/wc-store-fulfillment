@@ -2,7 +2,7 @@
 
 defined('ABSPATH') || exit;
 
-require_once __DIR__ . '/../model/LMS.model.php';
+require_once __DIR__ . '/../classes/fulfillment.Model.php';
 
 class Products
 {

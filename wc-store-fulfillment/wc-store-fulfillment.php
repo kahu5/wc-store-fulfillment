@@ -6,7 +6,7 @@
 Plugin Name: WC Store Fulfillment
 Plugin URI: https://github.com/kahu5/wc-store-fulfillment
 Description: Wordpress plugin for WooCommerce current inventory orders
-Version: 0.0.1
+Version: 0.0.2
 Author: Jared Meidal
 Author URI: https://github.com/kahu5/wc-store-fulfillment
 License: GPLv3
@@ -26,6 +26,6 @@ function wporg_options_page() {
         'wcstorefulfillment',
         'wporg_options_page_html',
         'dashicons-clipboard',
-        24
+        26
     );
 }

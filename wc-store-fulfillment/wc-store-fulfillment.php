@@ -6,7 +6,7 @@
  * Plugin Name: WC Store Fulfillment
  * Plugin URI: https://github.com/kahu5/wc-store-fulfillment
  * Description: Wordpress plugin for WooCommerce current inventory orders
- * Version: 0.0.4
+ * Version: 0.0.5
  * Requires at least: 5.5
  * Requires PHP:      7.3
  * Author: Jared Meidal
@@ -19,7 +19,7 @@ require_once __DIR__ . "/classes/fulfillment.View.php";
 
 add_action( 'admin_enqueue_scripts', 'js_enqueue' );
 function js_enqueue() {
-    wp_enqueue_script('script1', plugin_dir_url(__FILE__) . '/js/scripts.js');
+    wp_enqueue_script('script1', plugin_dir_url(__FILE__) . 'js/scripts.js');
 }
 
 plugins_url( 'scripts.js', _FILE_ );

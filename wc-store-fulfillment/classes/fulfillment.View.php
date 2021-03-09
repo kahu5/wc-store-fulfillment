@@ -24,17 +24,23 @@ class Products
 	}
 
 	function product_table_header() {
-		$output ='<table><tr><th>Product</th><th>Type of Product</th><th>Attributes</th><th>Orders</th></tr>';
+		$output ='<table class="striped" style="border: 1px #999 solid;">
+		<tr><th>Product</th><th>Type of Product</th><th>Attributes</th><th>Orders</th>
+		</tr>';
 		echo $output;
 	}
 
 	function order_table_header() {
-		$output ='<table><tr><th>ID</th><th>Type of Product</th><th>Attributes</th><th>Orders</th></tr>';
+		$output ='<table class="striped" style="border: 2px #999 solid;">
+		<tr><th>ID</th><th>Type of Product</th><th>Attributes</th><th>Orders</th>
+		</tr>';
 		echo $output;
 	}
 
     function prod_order_table_header() {
-		$output ='<table style="border: 2px #999 solid;" width=95%><tr><th>Main Product</th><th>Any Variations</th><th>Orders</th><th>Attributes</th><th>Calculations</th></tr>';
+		$output ='<table class="striped" style="border: 2px #999 solid;" width=95%>
+		<tr><th>Main Product</th><th>Any Variations</th><th>Orders</th><th>Attributes</th><th>Calculations</th>
+		</tr>';
 		echo $output;
 	}
 
@@ -42,7 +48,7 @@ class Products
 		$output ='</table>';
 		echo $output;
 	}
-	
+
     	    /**
      * Displays woocommerce products in a list.
      */
@@ -86,18 +92,18 @@ class Products
 
             //$output .= "<img style='vertical-align:middle;margin:0px 50px' width='75px' src='" . $v['image']['thumb_src'] . "' >";
             $output .= "</td>";
-            $output .= "<td>";    
+            $output .= "<td>";
             $v = "";
             if ($d->variations) {
                     foreach($d->variations as $v) {
                         //echo var_dump($v);
-                        
+
                         if ($v['attributes']['attribute_pa_ground']) {
                             $output .= " ID " . $v['variation_id'] . " " . $v['attributes']['attribute_pa_ground'] . " g<br>";
                             $pid = $v['variation_id'];
-                            $output .= $pid . "(pid) "; 
+                            $output .= $pid . "(pid) ";
                             $pid = wp_get_post_parent_id($pid);
-                            $output .= $pid . "(Ppid) "; 
+                            $output .= $pid . "(Ppid) ";
                             if ($pid != 0) {
                                 $p = get_post($pid);
                                 //$orders = \fulfillmentmodel\Products::getOrdersWithProducts($pid);
@@ -118,13 +124,13 @@ class Products
                             }
                         } else if ($v['attributes']['attribute_pa_roast']) {
                             $output .= " ID " . $v['variation_id'] . " " . $v['attributes']['attribute_pa_roast'] . " r<br>";
-                            
+
                         } else if ($v['attributes']['attribute_pa_weight']) {
                             $output .= " ID " . $v['variation_id'] . " " . $v['attributes']['attribute_pa_weight'] . " w<br>";
 
                         } else if ($v['attributes']['attribute_farm-to-cup-options']) {
                             $output .= " ID " . $v['variation_id'] . " " . $v['attributes']['attribute_farm-to-cup-options'] . " f<br>";
-                                
+
                         } else {
                             $output .= "a<br>";
                         }
@@ -136,7 +142,7 @@ class Products
 			$output .= "<td style='text-align:center'>{QTY} " . $orderCount . " orders</td>";
 			$output .= "</tr>";
         }
-    
+
         echo $output;
     }
 
@@ -163,7 +169,7 @@ class Products
 				$i++;
 				$product = wc_get_product($item_id);
 				//$productCreated = $product->get_date_created();
-				//$regularPrice = get_post_meta($product->ID, '_regular_price', true); 
+				//$regularPrice = get_post_meta($product->ID, '_regular_price', true);
 
                 $itemStatusCheck = $a[$item_id];
                 if ($itemStatusCheck != NULL) {
@@ -190,7 +196,7 @@ class Products
 
             }
         }
-        
+
         echo $output;
     }
 
@@ -228,17 +234,17 @@ class Products
             $output .= "</td>";
             $output .= "<td style='border: 2px #999 solid;'>{type}<br></td>";
 
-			$output .= "<td style='border: 2px #999 solid;'text-align:center'>{order}<br>";
-            
+			$output .= "<td style='border: 2px #999 solid;'text-align:center'>";
+
             foreach($prodArray as $pa) {
                 $orderOutput = "";
-                $output .= self::displayUserOrderbyProduct($pa, $orders); 
+                $output .= self::displayUserOrderbyProduct($pa, $orders);
             }
             $output .= "</td>";
             $output .= "<td style='border: 2px #999 solid;'>{qty}<br>" . count($prodArray) . "</td>";
 			$output .= "</tr>";
         }
-    
+
         echo $output;
     }
 
@@ -314,7 +320,7 @@ class Products
 				$i++;
 				$product = wc_get_product($item_id);
 				//$productCreated = $product->get_date_created();
-				//$regularPrice = get_post_meta($product->ID, '_regular_price', true); 
+				//$regularPrice = get_post_meta($product->ID, '_regular_price', true);
 
                 $itemStatusCheck = $a[$item_id];
                 if ($itemStatusCheck != NULL) {
@@ -323,7 +329,7 @@ class Products
 
                 switch ($r->post_status) {
                     case "wc-processing":
-                        
+
                         $output .= "<tr><td>" . $item_id . " <small>" . $product->get_date_created() . "</small><br>";
                         //$output .= $product->get_image();
                         $outputAttr = $product->get_default_attributes();
@@ -347,20 +353,21 @@ class Products
 
             }
         }
-        
+
         echo $output;
     }
 
      function displayUserOrderbyProduct($prod_id, $customer_orders)
     {
 		       // $orderOutput .= "<h3>Current Orders</h3>";
-                $orderOutput .= $prod_id . "<br>";  
+					 			$orderOutput .= '' . count($prod_id) . ' orders<br>';
+								$orderOutput .= $prod_id . "<br>";
                 $orderOutput .= count($customer_orders);
 
                 foreach($customer_orders as $r) {
                 $order = wc_get_order( $r->ID );
                 $items = $order->get_items();
-                
+
                 foreach($items as $item) {
 
                     $quantity = $item['quantity'];
@@ -376,7 +383,7 @@ class Products
                         if ($itemStatusCheck != NULL) {
                             $status = $objectStatusPackage[$itemStatusCheck];
                         }
-        
+
                         switch ($r->post_status) {
                             case "wc-processing":
                                 $orderOutput .= "Order#" .$order['id'] . " " . $order['user'] . " ";
@@ -387,9 +394,9 @@ class Products
                             case "wc-completed":
                                 break;
                             default:
-        
+
                         }
-    
+
                     }
                     }
                 }

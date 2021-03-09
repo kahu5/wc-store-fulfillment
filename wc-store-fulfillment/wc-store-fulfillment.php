@@ -9,7 +9,7 @@
  * Author: Jared Meidal
  * Author URI: https://github.com/kahu5/wc-store-fulfillment
  * License: GPLv3
- * Version: 0.0.5
+ * Version: 0.0.6
  * Requires at least: 5.5
  * Requires PHP:      7.3
  * WC requires at least: 4.7.0
@@ -28,9 +28,12 @@ plugins_url( 'scripts.js', _FILE_ );
 
 add_action('admin_menu', 'options_page');
 function options_page() {
+
+  //$notification_count = 2;
+
     add_menu_page(
         'WC Store Fulfillment',
-        'Fulfillment',
+        $notification_count ? 'Fulfillment <span class="awaiting-mod">' . $notification_count . '</span>' : 'Fulfillment',
         'manage_options',
         'wcstorefulfillment',
         'options_page_display',
@@ -43,6 +46,23 @@ function options_page_display() {
 	\fulfillmentview\Products::page_refresh();
     \fulfillmentview\Products::options_page_html();
     $data = \fulfillmentmodel\Products::getPublishedProducts();
+
+    //$data = \fulfillmentmodel\Products::getPublishedProductsSimplified($prod_id);
+    $orders = \fulfillmentmodel\Products::getUserOrders($uid);
+
+    $orders = \fulfillmentmodel\Products::getOrdersWithProducts($data);
+ //   \fulfillmentview\Products::prod_order_table_header();
+ //   \fulfillmentview\Products::displayFulfillmentProducts($data, $orders);
+ //   \fulfillmentview\Products::table_end();
+
+//    \fulfillmentview\Products::displayFulfillmentOrders($orders, $orderLimit);
+
 	\fulfillmentview\Products::product_table_header();
-    \fulfillmentview\Products::displayPublishedProducts($data);
+    \fulfillmentview\Products::displayPublishedProducts($data, $orders);
+    \fulfillmentview\Products::table_end();
+
+ //   $orderLimit = 6;
+ //   \fulfillmentview\Products::order_table_header();
+ //   \fulfillmentview\Products::displayUserOrders($orders, $orderLimit);
+ //   \fulfillmentview\Products::table_end();
 }
